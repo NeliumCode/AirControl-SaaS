@@ -1,0 +1,20 @@
+[default]
+  url = "http://localhost:8086"
+  token = "81ee5cb702a05aa5b3974291c834b24caab1f5a64d5f356c95e54a8857bf345c"
+  org = "AirControl_Nelium"
+  active = true
+# 
+# [eu-central]
+#   url = "https://eu-central-1-1.aws.cloud2.influxdata.com"
+#   token = "XXX"
+#   org = ""
+# 
+# [us-central]
+#   url = "https://us-central1-1.gcp.cloud2.influxdata.com"
+#   token = "XXX"
+#   org = ""
+# 
+# [us-west]
+#   url = "https://us-west-2-1.aws.cloud2.influxdata.com"
+#   token = "XXX"
+#   org = ""

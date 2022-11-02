@@ -1,0 +1,55 @@
+version: '3'
+services:
+  influxdb:
+    image: influxdb:2.1
+    volumes:
+      - ${DOCKER_INFLUXDB_DATA_PATH}:/var/lib/influxdb2
+      - ${DOCKER_INFLUXDB_CFG_PATH}:/etc/influxdb2
+    env_file:
+      - .env
+    entrypoint: ["./entrypoint.sh"]
+    restart: always
+    ports:
+      - ${DOCKER_INFLUXDB_INIT_PORT}:8086
+    networks:
+      - air-Control
+
+  telegraf:
+    image: telegraf:latest
+    volumes:
+      - ${TELEGRAF_CFG_PATH}:/etc/telegraf
+    env_file:
+      - .env
+    links:
+      - influxdb
+    depends_on:
+      - influxdb
+    networks:
+      - air-Control
+
+  postgres:
+    image: postgres
+    env_file:
+      - .env
+    volumes:
+      - ${DOCKER_POSTGRES_DATA_PATH}:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    networks:
+      - air-Control
+
+  backend:
+    build: ./Backend
+    env_file:
+      - .env
+    restart: always
+    ports:
+      - ${DOCKER_BACKEND_INIT_PORT}:8000
+    depends_on:
+      - postgres
+    networks:
+      - air-Control
+
+networks:
+  air-Control:
+    driver: bridge
