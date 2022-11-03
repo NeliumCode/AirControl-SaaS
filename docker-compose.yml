@@ -34,7 +34,7 @@ services:
     volumes:
       - ${DOCKER_POSTGRES_DATA_PATH}:/var/lib/postgresql/data
     ports:
-      - 5432:5432
+      - ${DOCKER_POSTGRES_INIT_PORT}:5432
     networks:
       - air-Control
 
@@ -47,6 +47,18 @@ services:
       - ${DOCKER_BACKEND_INIT_PORT}:8000
     depends_on:
       - postgres
+    networks:
+      - air-Control
+
+  frontend:
+    build: ./Frontend/air_control_app
+    env_file:
+      - .env
+    restart: always
+    ports:
+      - ${DOCKER_FRONTEND_INIT_PORT}:3000
+    depends_on:
+      - backend
     networks:
       - air-Control
 

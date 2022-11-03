@@ -9,7 +9,7 @@ urlpatterns = [
 
     # ''' AUTH TOKEN URLS ''' #
 
-    path('auth', obtain_auth_token),
+    # path('auth', obtain_auth_token),
 
 
     # ''' INFLUXDB PYTHON CLIENT URLS ''' #

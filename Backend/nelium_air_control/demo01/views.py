@@ -25,7 +25,6 @@ client = InfluxDBClient(url="http://influxdb:8086",
 
 @api_view(["GET"])
 @authentication_classes([authentication.SessionAuthentication, authentication.TokenAuthentication])
-@permission_classes([permissions.IsAuthenticated])
 def get_influxdb_data(request, deviceID):
 
     bucket = "AC_sensors"
@@ -162,7 +161,6 @@ def get_influxdb_data(request, deviceID):
 class CasasPerUserListAPIView(generics.ListAPIView):
     serializer_class = CasaSerializer
     authentication_classes = [authentication.SessionAuthentication, authentication.TokenAuthentication]
-    permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         currentUser = get_object_or_404(User, pk=self.request.user.pk)
@@ -177,7 +175,6 @@ class CasasPerUserListAPIView(generics.ListAPIView):
 class CasaDetailsPerUserAPIView(generics.RetrieveAPIView):
     serializer_class = CasaSerializer
     authentication_classes = [authentication.SessionAuthentication, authentication.TokenAuthentication]
-    permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         currentUser = get_object_or_404(User, pk=self.request.user.pk)
@@ -193,25 +190,25 @@ class AllGestorasListAPIView(generics.ListAPIView):
     queryset = Gestora.objects.all()
     serializer_class = GestoraSerializer
     authentication_classes = [authentication.SessionAuthentication, authentication.TokenAuthentication]
-    permission_classes = [permissions.IsAuthenticated, IsSuperuserPermission]
+    permission_classes = [IsSuperuserPermission]
 
 class AllUsuariosListAPIView(generics.ListAPIView):
     queryset = Usuario.objects.all()
     serializer_class = UsuarioSerializer
     authentication_classes = [authentication.SessionAuthentication, authentication.TokenAuthentication]
-    permission_classes = [permissions.IsAuthenticated, IsSuperuserPermission]
+    permission_classes = [IsSuperuserPermission]
 
 class AllCasasListAPIView(generics.ListAPIView):
     queryset = Casa.objects.all()
     serializer_class = CasaSerializer
     authentication_classes = [authentication.SessionAuthentication, authentication.TokenAuthentication]
-    permission_classes = [permissions.IsAuthenticated, IsSuperuserPermission]
+    permission_classes = [IsSuperuserPermission]
 
 class AllDevicesListAPIView(generics.ListAPIView):
     queryset = Device.objects.all()
     serializer_class = DeviceSerializer
     authentication_classes = [authentication.SessionAuthentication, authentication.TokenAuthentication]
-    permission_classes = [permissions.IsAuthenticated, IsSuperuserPermission]
+    permission_classes = [IsSuperuserPermission]
 
 
 ''' ADMIN DETAILS API VIEW '''
@@ -220,22 +217,22 @@ class AllGestoraDetailsAPIView(generics.RetrieveAPIView):
     queryset = Gestora.objects.all()
     serializer_class = GestoraSerializer
     authentication_classes = [authentication.SessionAuthentication, authentication.TokenAuthentication]
-    permission_classes = [permissions.IsAuthenticated, IsSuperuserPermission]
+    permission_classes = [IsSuperuserPermission]
 
 class AllUsuarioDetailsAPIView(generics.RetrieveAPIView):
     queryset = Usuario.objects.all()
     serializer_class = UsuarioSerializer
     authentication_classes = [authentication.SessionAuthentication, authentication.TokenAuthentication]
-    permission_classes = [permissions.IsAuthenticated, IsSuperuserPermission]
+    permission_classes = [IsSuperuserPermission]
 
 class AllCasaDetailsAPIView(generics.RetrieveAPIView):
     queryset = Casa.objects.all()
     serializer_class = CasaSerializer
     authentication_classes = [authentication.SessionAuthentication, authentication.TokenAuthentication]
-    permission_classes = [permissions.IsAuthenticated, IsSuperuserPermission]
+    permission_classes = [IsSuperuserPermission]
 
 class AllDeviceDetailsAPIView(generics.RetrieveAPIView):
     queryset = Device.objects.all()
     serializer_class = DeviceSerializer
     authentication_classes = [authentication.SessionAuthentication, authentication.TokenAuthentication]
-    permission_classes = [permissions.IsAuthenticated, IsSuperuserPermission]
+    permission_classes = [IsSuperuserPermission]
