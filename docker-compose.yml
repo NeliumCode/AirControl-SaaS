@@ -50,6 +50,17 @@ services:
     networks:
       - air-Control
 
+  
+  cors:
+    image: redocly/cors-anywhere
+    env_file:
+      - .env
+    ports:
+      - ${DOCKER_CORS_BRIDGE_INIT_PORT}:8080
+    networks:
+      - air-Control
+
+
   frontend:
     build: ./Frontend/air_control_app
     env_file:

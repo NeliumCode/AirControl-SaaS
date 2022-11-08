@@ -29,7 +29,9 @@ SECRET_KEY = 'django-insecure-e)3c(jop-_+^$e_^5kpe+fql2i#ih71%sio^@op$h2@sk%c-yu
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+
+ALLOWED_HOSTS = ["*"]
+CORS_ALLOW_ALL_ORIGINS: True
 
 
 # Application definition
@@ -41,8 +43,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     'rest_framework',
-    'rest_framework.authtoken',
+    # 'rest_framework.authtoken',
     'rest_framework_simplejwt.token_blacklist',
     'djoser',
     'demo01'
@@ -51,6 +54,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -150,7 +154,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Email Domain and Site Name configuration
 
-# DOMAIN = ('tfg.local:3000') 
+DOMAIN = ('localhost:3000') 
 SITE_NAME = ('Nelium Air Control')
 
 
@@ -159,15 +163,15 @@ SITE_NAME = ('Nelium Air Control')
 
 DJOSER = {
     'USER_CREATE_PASSWORD_RETYPE': True,
-    # 'USERNAME_CHANGED_EMAIL_CONFIRMATION': True,
-    # 'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True,
-    # 'SEND_CONFIRMATION_EMAIL': True,
-    # 'SEND_ACTIVATION_EMAIL': True,
-    # 'SET_PASSWORD_RETYPE': True,
-    # 'PASSWORD_RESET_CONFIRM_RETYPE': True,
-    # 'PASSWORD_RESET_CONFIRM_URL': 'password/reset/confirm/{uid}/{token}',
-    # 'USERNAME_RESET_CONFIRM_URL': 'email/reset/confirm/{uid}/{token}',
-    # 'ACTIVATION_URL': 'activate/{uid}/{token}',
+    'USERNAME_CHANGED_EMAIL_CONFIRMATION': True,
+    'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True,
+    'SEND_CONFIRMATION_EMAIL': True,
+    'SEND_ACTIVATION_EMAIL': True,
+    'SET_PASSWORD_RETYPE': True,
+    'PASSWORD_RESET_CONFIRM_RETYPE': True,
+    'PASSWORD_RESET_CONFIRM_URL': 'password/reset/confirm/{uid}/{token}',
+    'USERNAME_RESET_CONFIRM_URL': 'email/reset/confirm/{uid}/{token}',
+    'ACTIVATION_URL': 'activate/{uid}/{token}',
     'SERIALIZERS': {
         'user_create': 'djoser.serializers.UserCreateSerializer',
         'user': 'djoser.serializers.UserSerializer',
@@ -185,7 +189,7 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),
+    )
 }
 
 SIMPLE_JWT = {

@@ -1,11 +1,12 @@
 # Create your views here.
 
-from rest_framework import authentication, permissions
+#from rest_framework import authentication, permissions
 from rest_framework import generics
 
 from influxdb_client import InfluxDBClient
 from rest_framework.response import Response
-from rest_framework.decorators import api_view, authentication_classes, permission_classes
+from rest_framework.decorators import api_view
+# from rest_framework.decorators import authentication_classes, permission_classes
 # from django.http import JsonResponse
 # import json
 
@@ -24,7 +25,7 @@ client = InfluxDBClient(url="http://influxdb:8086",
                         org="AirControl_Nelium")
 
 @api_view(["GET"])
-@authentication_classes([authentication.SessionAuthentication, authentication.TokenAuthentication])
+# @authentication_classes([authentication.SessionAuthentication, authentication.TokenAuthentication])
 def get_influxdb_data(request, deviceID):
 
     bucket = "AC_sensors"
@@ -160,7 +161,7 @@ def get_influxdb_data(request, deviceID):
 
 class CasasPerUserListAPIView(generics.ListAPIView):
     serializer_class = CasaSerializer
-    authentication_classes = [authentication.SessionAuthentication, authentication.TokenAuthentication]
+    # authentication_classes = [authentication.SessionAuthentication, authentication.TokenAuthentication]
 
     def get_queryset(self):
         currentUser = get_object_or_404(User, pk=self.request.user.pk)
@@ -174,7 +175,7 @@ class CasasPerUserListAPIView(generics.ListAPIView):
 
 class CasaDetailsPerUserAPIView(generics.RetrieveAPIView):
     serializer_class = CasaSerializer
-    authentication_classes = [authentication.SessionAuthentication, authentication.TokenAuthentication]
+    # authentication_classes = [authentication.SessionAuthentication, authentication.TokenAuthentication]
 
     def get_queryset(self):
         currentUser = get_object_or_404(User, pk=self.request.user.pk)
@@ -189,25 +190,25 @@ class CasaDetailsPerUserAPIView(generics.RetrieveAPIView):
 class AllGestorasListAPIView(generics.ListAPIView):
     queryset = Gestora.objects.all()
     serializer_class = GestoraSerializer
-    authentication_classes = [authentication.SessionAuthentication, authentication.TokenAuthentication]
+    # authentication_classes = [authentication.SessionAuthentication, authentication.TokenAuthentication]
     permission_classes = [IsSuperuserPermission]
 
 class AllUsuariosListAPIView(generics.ListAPIView):
     queryset = Usuario.objects.all()
     serializer_class = UsuarioSerializer
-    authentication_classes = [authentication.SessionAuthentication, authentication.TokenAuthentication]
+    # authentication_classes = [authentication.SessionAuthentication, authentication.TokenAuthentication]
     permission_classes = [IsSuperuserPermission]
 
 class AllCasasListAPIView(generics.ListAPIView):
     queryset = Casa.objects.all()
     serializer_class = CasaSerializer
-    authentication_classes = [authentication.SessionAuthentication, authentication.TokenAuthentication]
+    # authentication_classes = [authentication.SessionAuthentication, authentication.TokenAuthentication]
     permission_classes = [IsSuperuserPermission]
 
 class AllDevicesListAPIView(generics.ListAPIView):
     queryset = Device.objects.all()
     serializer_class = DeviceSerializer
-    authentication_classes = [authentication.SessionAuthentication, authentication.TokenAuthentication]
+    # authentication_classes = [authentication.SessionAuthentication, authentication.TokenAuthentication]
     permission_classes = [IsSuperuserPermission]
 
 
@@ -216,23 +217,23 @@ class AllDevicesListAPIView(generics.ListAPIView):
 class AllGestoraDetailsAPIView(generics.RetrieveAPIView):
     queryset = Gestora.objects.all()
     serializer_class = GestoraSerializer
-    authentication_classes = [authentication.SessionAuthentication, authentication.TokenAuthentication]
+    # authentication_classes = [authentication.SessionAuthentication, authentication.TokenAuthentication]
     permission_classes = [IsSuperuserPermission]
 
 class AllUsuarioDetailsAPIView(generics.RetrieveAPIView):
     queryset = Usuario.objects.all()
     serializer_class = UsuarioSerializer
-    authentication_classes = [authentication.SessionAuthentication, authentication.TokenAuthentication]
+    # authentication_classes = [authentication.SessionAuthentication, authentication.TokenAuthentication]
     permission_classes = [IsSuperuserPermission]
 
 class AllCasaDetailsAPIView(generics.RetrieveAPIView):
     queryset = Casa.objects.all()
     serializer_class = CasaSerializer
-    authentication_classes = [authentication.SessionAuthentication, authentication.TokenAuthentication]
+    # authentication_classes = [authentication.SessionAuthentication, authentication.TokenAuthentication]
     permission_classes = [IsSuperuserPermission]
 
 class AllDeviceDetailsAPIView(generics.RetrieveAPIView):
     queryset = Device.objects.all()
     serializer_class = DeviceSerializer
-    authentication_classes = [authentication.SessionAuthentication, authentication.TokenAuthentication]
+    # authentication_classes = [authentication.SessionAuthentication, authentication.TokenAuthentication]
     permission_classes = [IsSuperuserPermission]
