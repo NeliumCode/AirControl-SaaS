@@ -16,8 +16,8 @@ const Home = ({ isAuthenticated }) => {
 
     const autenticados = () => (
         <Fragment>
-            <p className='lead mt-3'>Accede a tus analiticas pulsando el siguiente botón:</p>
-            <Link className='btn btn-primary btn-lg mb-5' to='/analytics'>Analíticas</Link>
+            <p className='lead mt-3'>Accede a tus casas pulsando el siguiente botón:</p>
+            <Link className='btn btn-primary btn-lg mb-5' to='/listCasasUser'>Lista de Casas</Link>
         </Fragment>
     );
 

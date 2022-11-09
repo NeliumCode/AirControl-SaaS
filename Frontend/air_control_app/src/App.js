@@ -14,7 +14,7 @@ import { Provider } from 'react-redux';
 import store from './store';
 
 import Layout from './hocs/Layout';
-// import Analytics from './containers/Analytics';
+import ListCasasUser from './containers/ListCasasUser';
 
 
 // --- ANALYTICS REQUEST EXCEPTION CONTROL --- //
@@ -38,6 +38,7 @@ const App = () => (
                     <Route exact path='/' element={ <Home/> } />
                     <Route exact path='/login' element={ <Login/> } />
                     <Route exact path='/signup' element={ <Signup/> } />
+                    <Route exact path='/listCasasUser' element={ <ListCasasUser/> } />
                     {/* <Route exact path='/reset-password' component={ResetPassword} />
                     <Route exact path='/password/reset/confirm/:uid/:token' component={ResetPasswordConfirm} />
                     <Route exact path='/activate/:uid/:token' component={Activate} /> */}
