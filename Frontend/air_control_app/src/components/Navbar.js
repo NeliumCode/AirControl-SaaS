@@ -45,7 +45,7 @@ const Navbar = ({ logout, isAuthenticated }) => {
     const linksAutenticados = () => (
 
         <Fragment>
-            <Link to='/analytics' onClick={() => setResponsiveLinks(false)}>Analíticas</Link>
+            <Link to='/listCasasUser' onClick={() => setResponsiveLinks(false)}>Analíticas</Link>
             <Link to='/' onClick={cierreSesion}>Cerrar Sesión</Link>
         </Fragment>
 

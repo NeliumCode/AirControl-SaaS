@@ -1,4 +1,4 @@
-import React, { useEffect, Fragment } from 'react';
+import React, { useEffect, useState, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Axios from 'axios';
@@ -10,6 +10,7 @@ const ListCasasUser = ({ isAuthenticated }) => {
     // --- JWT CREDENTIALS RETRIEVE --- //
 
     var accessToken = localStorage.getItem('access');
+
 
     // --- METHOD TO RETRIEVE A LIST OF CASAS PER USER --- //
 
@@ -26,13 +27,40 @@ const ListCasasUser = ({ isAuthenticated }) => {
         };
 
 
+        // --- CONST FOR JSON DATA --- //
+
+        var jsonResponse;
+
+
         // --- BACKEND API REQUESTS --- //
 
         Axios.get('http://localhost:8080/http://backend:8000/api/v1/casasUser', headersPostgresDB).then(
             (response) => {
                 console.log(response);
-                //setInnerTemp(response.data.results[0].series[0].values[0][1]);
+                jsonResponse = response.data;
+                console.log(jsonResponse);
             }
+        );
+        console.log(jsonResponse);
+        return jsonResponse;
+    };
+
+
+    // --- METHOD TO ITERATE CASAS LIST & SHOW THEM --- //
+
+    const iterateCasasFunc = () => {
+        var jsonResponse = getListCasasPerUser();
+        const iterateCasas = [];
+        console.log(jsonResponse);
+        for (let casa of jsonResponse) {
+            console.log(casa);
+            iterateCasas.push(<li>{casa.name}, {casa.adress}</li>);
+        }
+        
+        return (
+            <div>
+                {iterateCasas()}
+            </div>
         );
     };
 
@@ -40,7 +68,9 @@ const ListCasasUser = ({ isAuthenticated }) => {
     // --- AUTO-CALL FUNCTION WHEN RENDERS THE PAGE --- //
 
     useEffect(() => {
-        getListCasasPerUser();
+        // getListCasasPerUser();
+        iterateCasasFunc();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
 
@@ -94,6 +124,9 @@ const ListCasasUser = ({ isAuthenticated }) => {
                     </p>
                     <button onClick={getListCasasPerUser} className='btn btn-primary btn-lg mt-2'>Actualizar Casas</button>
                     <hr classNameName='my-4' />
+                </div>
+                <div>
+                    {iterateCasasFunc}
                 </div>
             </div>
         </Fragment>
