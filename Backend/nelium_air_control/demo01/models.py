@@ -39,10 +39,11 @@ class Casa(models.Model):
 
 
 class Device(models.Model):
-    device_id = models.AutoField(primary_key=True, unique=True)
+    id = models.AutoField(primary_key=True, unique=True)
+    deviceId = models.CharField(max_length=12, null=True, blank=True)
     online = models.BooleanField(null=True)
     versions = models.CharField(max_length=30, null=None)
     casa = models.ForeignKey(Casa, related_name='devices', on_delete=models.CASCADE)
 
     def __str__(self):
-        return (str(self.device_id) + ' ' + self.versions)
+        return (str(self.deviceId) + ' ' + self.versions)

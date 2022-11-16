@@ -7,7 +7,7 @@ from .models import Gestora, Usuario, Casa, Device
 class DeviceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Device
-        fields = ['device_id', 'online', 'versions']
+        fields = ['id, deviceId', 'online', 'versions']
 
 
 class CasaSerializer(serializers.ModelSerializer):
