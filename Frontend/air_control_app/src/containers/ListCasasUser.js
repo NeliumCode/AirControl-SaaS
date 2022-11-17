@@ -27,49 +27,30 @@ const ListCasasUser = ({ isAuthenticated }) => {
         };
 
 
-        // --- CONST FOR JSON DATA --- //
-
-        var jsonResponse;
-
-
         // --- BACKEND API REQUESTS --- //
 
-        Axios.get('http://localhost:8080/http://backend:8000/api/v1/casasUser', headersPostgresDB).then(
-            (response) => {
-                console.log(response);
-                jsonResponse = response.data;
-                console.log(jsonResponse);
-            }
-        );
-        console.log(jsonResponse);
-        return jsonResponse;
-    };
+        Axios.get('http://localhost:8080/http://backend:8000/api/v1/casasUser', headersPostgresDB).then(response => { 
+            console.log(response);
+            document.querySelector('.houses-js').innerHTML = getListCasasHTML(response.data)
+         })
+    }
 
 
     // --- METHOD TO ITERATE CASAS LIST & SHOW THEM --- //
 
-    const iterateCasasFunc = () => {
-        var jsonResponse = getListCasasPerUser();
-        const iterateCasas = [];
-        console.log(jsonResponse);
-        for (let casa of jsonResponse) {
-            console.log(casa);
-            iterateCasas.push(<li>{casa.name}, {casa.adress}</li>);
-        }
-        
-        return (
-            <div>
-                {iterateCasas()}
-            </div>
-        );
-    };
+    const getListCasasHTML = (casas) => {
+        let casasHTML = ''
+      
+        casas.forEach(casa => {
+          casasHTML += '<li>' + '<b>' + casa.name + ': ' + '</b>' + casa.adress + '</li>'
+        })
+        return casasHTML
+      }
 
 
     // --- AUTO-CALL FUNCTION WHEN RENDERS THE PAGE --- //
 
-    useEffect(() => {
-        // getListCasasPerUser();
-        iterateCasasFunc();
+    useEffect(() => { getListCasasPerUser() 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -125,8 +106,7 @@ const ListCasasUser = ({ isAuthenticated }) => {
                     <button onClick={getListCasasPerUser} className='btn btn-primary btn-lg mt-2'>Actualizar Casas</button>
                     <hr classNameName='my-4' />
                 </div>
-                <div>
-                    {iterateCasasFunc}
+                <div class='houses-js'>
                 </div>
             </div>
         </Fragment>

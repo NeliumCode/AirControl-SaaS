@@ -40,7 +40,7 @@ class Casa(models.Model):
 
 class Device(models.Model):
     id = models.AutoField(primary_key=True, unique=True)
-    deviceId = models.CharField(max_length=12, null=True, blank=True)
+    deviceId = models.CharField(max_length=12, null=None)
     online = models.BooleanField(null=True)
     versions = models.CharField(max_length=30, null=None)
     casa = models.ForeignKey(Casa, related_name='devices', on_delete=models.CASCADE)
