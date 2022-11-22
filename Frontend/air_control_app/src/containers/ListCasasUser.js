@@ -42,7 +42,7 @@ const ListCasasUser = ({ isAuthenticated }) => {
         let casasHTML = ''
       
         casas.forEach(casa => {
-          casasHTML += '<li>' + '<b>' + casa.name + ': ' + '</b>' + casa.adress + '</li>'
+          casasHTML += `<a href="http://localhost:3000/casaDetails/` + casa.id + `">` + '<li>' + '<b>' + casa.name + ': ' + '</b>' + casa.adress + '</li>' + '</Link>'
         })
         return casasHTML
       }
