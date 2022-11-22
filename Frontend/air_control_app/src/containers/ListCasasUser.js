@@ -1,8 +1,8 @@
-import React, { useEffect, useState, Fragment } from 'react';
+import React, { useEffect, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Axios from 'axios';
-import '../styles/analyticsStyle.css';
+import '../styles/listCasasStyle.css';
 
 const ListCasasUser = ({ isAuthenticated }) => {
 

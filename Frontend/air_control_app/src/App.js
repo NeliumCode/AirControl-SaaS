@@ -43,7 +43,7 @@ const App = () => (
                     <Route exact path='/password/reset/confirm/:uid/:token' component={ResetPasswordConfirm} />
                     <Route exact path='/activate/:uid/:token' component={Activate} /> */}
                     {/* currentHour === 0 ? non_operational() : operational() */} {/* Condition to control the redirection to analytics page when is out of service */}
-                    <Route element={ NotFound } />
+                    <Route exact path='*' element={ <NotFound/> } />
                 </Routes>
             </Layout>
         </Router>

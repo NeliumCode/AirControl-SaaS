@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import conceptImage from '../assets/conceptoHome.jpeg';
+import conceptImage from '../assets/AirControlConcept.jpeg';
 
 import '../styles/homeStyle.css';
 
