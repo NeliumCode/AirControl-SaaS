@@ -32,9 +32,9 @@ def get_influxdb_data(request, deviceID):
 
     parameters = {
     "_bucket": bucket,
-    "_deviceId": str(deviceID) # Este deviceID vendrá dado por la API /casaDetailsUser/<int:pk>, la cual solo es accesible
-                               # por el usuario que pertenezca a la gestora de dicha casa, esto hace que 
-                               # ya haya una capa de seguridad aplicada para poder acceder al deviceID.
+    "_deviceId": deviceID # Este deviceID vendrá dado por la API /casaDetailsUser/<int:pk>, la cual solo es accesible
+                          # por el usuario que pertenezca a la gestora de dicha casa, esto hace que 
+                          # ya haya una capa de seguridad aplicada para poder acceder al deviceID.
 }
 
     # Query for retrieving all temps of sensor 1 for last 24 hours

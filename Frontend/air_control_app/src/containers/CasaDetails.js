@@ -36,7 +36,7 @@ const CasaDetails = ({ isAuthenticated }) => {
             // console.log(response.data);
             // console.log(response.data.devices);
             document.querySelector('.houseDetails-js').innerHTML = getCasaDetailsHTML(response.data);
-            document.querySelector('.devices-js').innerHTML = getListDevicesHTML(response.data.devices);
+            document.querySelector('.devices-js').innerHTML = retieveInfluxData(response.data.devices);
          })
     }
 
@@ -58,15 +58,42 @@ const CasaDetails = ({ isAuthenticated }) => {
     
     // --- METHOD TO ITERATE DEVICES LIST & SHOW THEM  --- //
 
-    const getListDevicesHTML = (devices) => {
-        let devicesHTML = '<h3><b> Devices </b></h3></br>'
+    // const getListDevicesHTML = (devices) => {
+    //     let devicesHTML = '<h3><b> Devices </b></h3></br>'
+
+    //     devices.forEach(device => {
+    //         devicesHTML += '<li>' + '<b>' + device.versions + ': ' + '</b>' + device.deviceId + ', ' + device.online + '</li>';
+    //     })
+    //     // console.log(devicesHTML);
+    //     return devicesHTML
+    //   }
+
+
+    // --- METHOD TO RETRIEVE DATA FOR EACH EXISTING DEVICE IN CASA--- //
+
+    const retieveInfluxData = (devices) => {
+
+        // --- HEADERS INFLUXDB API REQUESTS --- //
+
+        const headersInfluxDB = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'JWT ' + accessToken
+            }
+        };
 
         devices.forEach(device => {
-            devicesHTML += '<li>' + '<b>' + device.versions + ': ' + '</b>' + device.deviceId + ', ' + device.online + '</li>';
+            
+            // --- INFLUXDB API REQUESTS --- //
+
+            Axios.get('http://localhost:8080/http://backend:8000/api/v1/influxRequest/' + device.deviceId, headersInfluxDB).then(response => { 
+                console.log(response);
+                console.log(response.data);
+                // document.querySelector('.houseDetails-js').innerHTML = getCasaDetailsHTML(response.data);
+            })
+            
         })
-        // console.log(devicesHTML);
-        return devicesHTML
-      }
+    }
 
 
     // --- ASSIGNING ID PARAM FROM URL --- //
