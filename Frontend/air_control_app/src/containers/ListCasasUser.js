@@ -30,7 +30,8 @@ const ListCasasUser = ({ isAuthenticated }) => {
         // --- BACKEND API REQUESTS --- //
 
         Axios.get('http://localhost:8080/http://backend:8000/api/v1/casasUser', headersPostgresDB).then(response => { 
-            console.log(response);
+            // console.log(response);
+            // console.log(response.data);
             document.querySelector('.houses-js').innerHTML = getListCasasHTML(response.data)
          })
     }
@@ -42,7 +43,7 @@ const ListCasasUser = ({ isAuthenticated }) => {
         let casasHTML = ''
       
         casas.forEach(casa => {
-          casasHTML += `<a href="http://localhost:3000/casaDetails/` + casa.id + `">` + '<li>' + '<b>' + casa.name + ': ' + '</b>' + casa.adress + '</li>' + '</Link>'
+          casasHTML += `<a href="casaDetails/` + casa.id + `">` + '<li>' + '<b>' + casa.name + ': ' + '</b>' + casa.adress + '</li>' + '</a>'
         })
         return casasHTML
       }

@@ -1,5 +1,5 @@
 import React, { useEffect, Fragment } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Axios from 'axios';
 import '../styles/listCasasStyle.css';
@@ -44,7 +44,7 @@ const CasaDetails = ({ isAuthenticated }) => {
     // --- METHOD TO GENERATE SHOW CASA DETAILS  --- //
 
     const getCasaDetailsHTML = (casa) => {
-        let casaDetailsHTML = ''
+        let casaDetailsHTML = '<h3><b> Detalles Casa </b></h3></br>'
       
         casaDetailsHTML +=  '<li> <b> Nombre: </b>' + casa.name + '</li>' + 
                             '<li> <b> Dirección: </b>' + casa.adress + '</li>' +
@@ -69,9 +69,14 @@ const CasaDetails = ({ isAuthenticated }) => {
       }
 
 
+    // --- ASSIGNING ID PARAM FROM URL --- //
+
+    const { id } = useParams();
+
+
     // --- AUTO-CALL FUNCTION WHEN RENDERS THE PAGE --- //
 
-    useEffect(() => { getCasaDetailsPerId(this.props.match.params.id) // Ahora mismo el ID está hardcodeado, pero tendrá que pasarse en el enlace pulsado en el listado de casas.
+    useEffect(() => { getCasaDetailsPerId(id) // ID automatizado para matchear con el de la URL.
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -124,7 +129,7 @@ const CasaDetails = ({ isAuthenticated }) => {
                     <p className='lead'>Te mostramos los datos específicos de una casa, además podrás encontrar los datos
                     de los sensores representados en una gráfica.
                     </p>
-                    <button onClick={getCasaDetailsPerId} className='btn btn-primary btn-lg mt-2'>Actualizar Casas</button>
+                    <Link className='btn btn-primary btn-lg mt-2' to='/listCasasUser' role='button'>Volver</Link>
                     <hr classNameName='my-4' />
                 </div>
                 <div class='houseDetails-js'></div>
