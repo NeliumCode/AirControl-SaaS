@@ -36,7 +36,7 @@ const CasaDetails = ({ isAuthenticated }) => {
             // console.log(response.data);
             // console.log(response.data.devices);
             document.querySelector('.houseDetails-js').innerHTML = getCasaDetailsHTML(response.data);
-            document.querySelector('.devices-js').innerHTML = retieveInfluxData(response.data.devices);
+            retrieveInfluxData(response.data.devices);
          })
     }
 
@@ -71,7 +71,7 @@ const CasaDetails = ({ isAuthenticated }) => {
 
     // --- METHOD TO RETRIEVE DATA FOR EACH EXISTING DEVICE IN CASA--- //
 
-    const retieveInfluxData = (devices) => {
+    const retrieveInfluxData = (devices) => {
 
         // --- HEADERS INFLUXDB API REQUESTS --- //
 
@@ -87,12 +87,24 @@ const CasaDetails = ({ isAuthenticated }) => {
             // --- INFLUXDB API REQUESTS --- //
 
             Axios.get('http://localhost:8080/http://backend:8000/api/v1/influxRequest/' + device.deviceId, headersInfluxDB).then(response => { 
-                console.log(response);
                 console.log(response.data);
-                // document.querySelector('.houseDetails-js').innerHTML = getCasaDetailsHTML(response.data);
+                document.querySelector('.deviceTemps-js').innerHTML = getTempsPerDevice(response.data);
             })
             
         })
+    }
+
+
+    // --- METHOD TO SHOW TEMP => (NEXT) => GENERATE GRAPH WITH TEMP DATA --- //
+
+    const getTempsPerDevice = (listTemps) => {
+        let tempHTML = '<h3><b> Temperatura </b></h3></br>'
+      
+        listTemps.forEach(temp => {
+            console.log(temp);
+          tempHTML += '<li><b>' + temp.temp + '</b></li>'
+        })
+        return tempHTML
     }
 
 
@@ -162,7 +174,7 @@ const CasaDetails = ({ isAuthenticated }) => {
                 <div class='houseDetails-js'></div>
                 <br/>
                 <br/>
-                <div class='devices-js'></div>
+                <div class='deviceTemps-js'></div>
             </div>
         </Fragment>
     );

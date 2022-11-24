@@ -43,7 +43,6 @@ def get_influxdb_data(request, deviceID):
             |> range(start: -24h)\
             |> filter(fn: (r) => r["deviceID"] == _deviceId)\
             |> filter(fn: (r) => r["_field"] == "temp")\
-            |> filter(fn: (r) => r["host"] == "bd43e1bd41b6")
             '''
 
     # Query for retrieving average temp of sensor 1 for last 24 hours
@@ -53,7 +52,7 @@ def get_influxdb_data(request, deviceID):
     #         |> filter(fn: (r) => r["deviceID"] == _deviceId)\
     #         |> filter(fn: (r) => r["_field"] == "temp")\
     #         |> filter(fn: (r) => r["host"] == "bd43e1bd41b6")\
-    #         |> aggregateWindow(every: 1d, fn: mean)
+    #         |> aggregateWindow(every: 1d, fn: mean)\
     #         |> fill(value: 0.0)
     #         '''
     
@@ -75,7 +74,7 @@ def get_influxdb_data(request, deviceID):
     #         |> filter(fn: (r) => r["deviceID"] == _deviceId)\
     #         |> filter(fn: (r) => r["_field"] == "temp")\
     #         |> filter(fn: (r) => r["host"] == "bd43e1bd41b6")\
-    #         |> aggregateWindow(every: 1d, fn: min)
+    #         |> aggregateWindow(every: 1d, fn: min)\
     #         |> fill(value: 0.0)
     #         '''
 
@@ -86,7 +85,7 @@ def get_influxdb_data(request, deviceID):
     #         |> filter(fn: (r) => r["deviceID"] == _deviceId)\
     #         |> filter(fn: (r) => r["_field"] == "temp")\
     #         |> filter(fn: (r) => r["host"] == "bd43e1bd41b6")\
-    #         |> aggregateWindow(every: 1d, fn: last)
+    #         |> aggregateWindow(every: 1d, fn: last)\
     #         |> fill(value: 0.0)
     #         '''
 
@@ -97,7 +96,7 @@ def get_influxdb_data(request, deviceID):
     #         |> filter(fn: (r) => r["deviceID"] == _deviceId)\
     #         |> filter(fn: (r) => r["_field"] == "temp")\
     #         |> filter(fn: (r) => r["host"] == "bd43e1bd41b6")\
-    #         |> aggregateWindow(every: 1d, fn: first)
+    #         |> aggregateWindow(every: 1d, fn: first)\
     #         |> fill(value: 0.0)
     #         '''
 
