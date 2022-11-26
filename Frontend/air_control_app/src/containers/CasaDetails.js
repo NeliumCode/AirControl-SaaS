@@ -73,6 +73,12 @@ const CasaDetails = ({ isAuthenticated }) => {
 
     const retrieveInfluxData = (devices) => {
 
+        // --- API REQUEST PARAMETERS INICIALIZATION --- //
+
+        const requestedRange = '-48h';
+
+        const filterField = 'temp';
+
         // --- HEADERS INFLUXDB API REQUESTS --- //
 
         const headersInfluxDB = {
@@ -86,7 +92,7 @@ const CasaDetails = ({ isAuthenticated }) => {
             
             // --- INFLUXDB API REQUESTS --- //
 
-            Axios.get('http://localhost:8080/http://backend:8000/api/v1/influxRequest/' + device.deviceId, headersInfluxDB).then(response => { 
+            Axios.get('http://localhost:8080/http://backend:8000/api/v1/influxRequest/' + requestedRange + '/' + device.deviceId + '/' + filterField , headersInfluxDB).then(response => { 
                 console.log(response.data);
                 document.querySelector('.deviceTemps-js').innerHTML = getTempsPerDevice(response.data);
             })
@@ -97,14 +103,19 @@ const CasaDetails = ({ isAuthenticated }) => {
 
     // --- METHOD TO SHOW TEMP => (NEXT) => GENERATE GRAPH WITH TEMP DATA --- //
 
-    const getTempsPerDevice = (listTemps) => {
-        let tempHTML = '<h3><b> Temperatura </b></h3></br>'
+    const getTempsPerDevice = (listData) => {
+        let dataHTML = '<h3><b> Temperatura </b></h3></br>'
       
-        listTemps.forEach(temp => {
-            console.log(temp);
-          tempHTML += '<li><b>' + temp.temp + '</b></li>'
+        listData.forEach(data => {
+            console.log(data);
+            if (data.temp){
+                dataHTML += '<li><b>' + data.temp + '</b></li>'
+            }
+            else if (data.pres){
+                dataHTML += '<li><b>' + data.pres + '</b></li>'
+            }
         })
-        return tempHTML
+        return dataHTML
     }
 
 

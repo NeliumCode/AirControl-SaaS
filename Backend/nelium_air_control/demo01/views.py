@@ -26,23 +26,25 @@ client = InfluxDBClient(url="http://influxdb:8086",
 
 @api_view(["GET"])
 # @authentication_classes([authentication.SessionAuthentication, authentication.TokenAuthentication])
-def get_influxdb_data(request, deviceID):
+def get_influxdb_data(request, timeRange, deviceID, filterField):
 
     bucket = "AC_sensors"
 
     parameters = {
     "_bucket": bucket,
-    "_deviceId": deviceID # Este deviceID vendrá dado por la API /casaDetailsUser/<int:pk>, la cual solo es accesible
-                          # por el usuario que pertenezca a la gestora de dicha casa, esto hace que 
-                          # ya haya una capa de seguridad aplicada para poder acceder al deviceID.
+    "_timeRange": timeRange,
+    "_deviceId": deviceID, # Este deviceID vendrá dado por la API /casaDetailsUser/<int:pk>, la cual solo es accesible
+                           # por el usuario que pertenezca a la gestora de dicha casa, esto hace que 
+                           # ya haya una capa de seguridad aplicada para poder acceder al deviceID.
+    "_filter": filterField
 }
 
     # Query for retrieving all temps of sensor 1 for last 24 hours
     query = '''
             from(bucket: _bucket)\
-            |> range(start: -24h)\
+            |> range(start: duration(v: _timeRange))\
             |> filter(fn: (r) => r["deviceID"] == _deviceId)\
-            |> filter(fn: (r) => r["_field"] == "temp")\
+            |> filter(fn: (r) => r["_field"] == _filter)\
             '''
 
     # Query for retrieving average temp of sensor 1 for last 24 hours
