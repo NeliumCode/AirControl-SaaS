@@ -92,7 +92,7 @@ const CasaDetails = ({ isAuthenticated }) => {
             
             // --- INFLUXDB API REQUESTS --- //
 
-            Axios.get('http://localhost:8080/http://backend:8000/api/v1/influxRequest/' + requestedRange + '/' + device.deviceId + '/' + filterField , headersInfluxDB).then(response => { 
+            Axios.get('http://localhost:8080/http://backend:8000/api/v1/influxRequest/' + requestedRange + '/' + device.deviceId + '/' + filterField, headersInfluxDB).then(response => { 
                 console.log(response.data);
                 document.querySelector('.deviceTemps-js').innerHTML = getTempsPerDevice(response.data);
             })

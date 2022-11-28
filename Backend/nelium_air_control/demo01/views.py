@@ -36,16 +36,32 @@ def get_influxdb_data(request, timeRange, deviceID, filterField):
     "_deviceId": deviceID, # Este deviceID vendrá dado por la API /casaDetailsUser/<int:pk>, la cual solo es accesible
                            # por el usuario que pertenezca a la gestora de dicha casa, esto hace que 
                            # ya haya una capa de seguridad aplicada para poder acceder al deviceID.
-    "_filter": filterField
-}
+    "_filter": filterField,
+    }
 
-    # Query for retrieving all temps of sensor 1 for last 24 hours
-    query = '''
-            from(bucket: _bucket)\
-            |> range(start: duration(v: _timeRange))\
-            |> filter(fn: (r) => r["deviceID"] == _deviceId)\
-            |> filter(fn: (r) => r["_field"] == _filter)\
-            '''
+    # Conditional to set query function correctly
+
+    if(filterField == 'temp'):
+
+        # Query for retrieving 24 mean data, 1 each hour, of filterField
+        query = '''
+                from(bucket: _bucket)\
+                |> range(start: duration(v: _timeRange))\
+                |> filter(fn: (r) => r["deviceID"] == _deviceId)\
+                |> filter(fn: (r) => r["_field"] == _filter)\
+                |> aggregateWindow(every: 1h, fn: mean, createEmpty: false)
+                '''
+
+    elif(filterField == 'pres'):
+
+        # Query for retrieving 24 last data, 1 each hour, of filterField
+        query = '''
+                from(bucket: _bucket)\
+                |> range(start: duration(v: _timeRange))\
+                |> filter(fn: (r) => r["deviceID"] == _deviceId)\
+                |> filter(fn: (r) => r["_field"] == _filter)\
+                |> aggregateWindow(every: 1h, fn: last, createEmpty: false)
+                '''
 
     # Query for retrieving average temp of sensor 1 for last 24 hours
     # query = '''
