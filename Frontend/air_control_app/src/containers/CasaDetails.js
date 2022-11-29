@@ -2,6 +2,7 @@ import React, { useEffect, Fragment } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Axios from 'axios';
+import LineChart from './LineChart';
 import '../styles/listCasasStyle.css';
 
 const CasaDetails = ({ isAuthenticated }) => {
@@ -186,6 +187,12 @@ const CasaDetails = ({ isAuthenticated }) => {
                 <br/>
                 <br/>
                 <div class='deviceTemps-js'></div>
+                <br/>
+                <br/>
+                <div> 
+                    <LineChart />
+                </div>
+
             </div>
         </Fragment>
     );
