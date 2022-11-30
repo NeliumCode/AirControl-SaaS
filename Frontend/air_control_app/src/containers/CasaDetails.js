@@ -76,7 +76,7 @@ const CasaDetails = ({ isAuthenticated }) => {
 
         // --- API REQUEST PARAMETERS INICIALIZATION --- //
 
-        const requestedRange = '-48h';
+        const requestedRange = '-24h';
 
         const filterField = 'temp';
 
@@ -106,17 +106,24 @@ const CasaDetails = ({ isAuthenticated }) => {
 
     const getTempsPerDevice = (listData) => {
         let dataHTML = '<h3><b> Temperatura </b></h3></br>'
+        let listReadableData = []
       
         listData.forEach(data => {
             console.log(data);
             if (data.temp){
+                listReadableData.push(data.temp)
                 dataHTML += '<li><b>' + data.temp + '</b></li>'
             }
-            else if (data.pres){
-                dataHTML += '<li><b>' + data.pres + '</b></li>'
-            }
+            // else if (data.pres){
+            //     listReadableData.push(data.pres)
+            //     dataHTML += '<li><b>' + data.pres + '</b></li>'
+            // }
+            // else if (data.ACOff){
+            //     listReadableData.push(data.ACOff)
+            //     dataHTML += '<li><b>' + data.ACOff + '</b></li>'
+            // }
         })
-        return dataHTML
+        return dataHTML+= '<br/><br/>' + <LineChart chartData={ listReadableData }/>
     }
 
 
@@ -187,11 +194,11 @@ const CasaDetails = ({ isAuthenticated }) => {
                 <br/>
                 <br/>
                 <div class='deviceTemps-js'></div>
-                <br/>
+                {/* <br/>
                 <br/>
                 <div> 
                     <LineChart />
-                </div>
+                </div> */}
 
             </div>
         </Fragment>

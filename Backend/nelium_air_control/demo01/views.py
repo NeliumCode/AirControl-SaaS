@@ -52,7 +52,7 @@ def get_influxdb_data(request, timeRange, deviceID, filterField):
                 |> aggregateWindow(every: 1h, fn: mean, createEmpty: false)
                 '''
 
-    elif(filterField == 'pres'):
+    elif(filterField == 'pres' or filterField == 'ACOff'):
 
         # Query for retrieving 24 last data, 1 each hour, of filterField
         query = '''

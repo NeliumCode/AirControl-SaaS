@@ -2,7 +2,7 @@ import React from 'react';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS } from 'chart.js/auto';
 
-const LineChart = () => {
+const LineChart = ({chartData}) => {
     return <div>
         <Line
             data={{
@@ -13,9 +13,7 @@ const LineChart = () => {
                 datasets: [
                     {
                         label: 'Temperaturas',
-                        data: [
-                            20, 21, 21, 27, 25, 17, 18, 16, 20, 20, 19, 21, 23, 29, 29, 30, 31, 31, 25, 23, 21, 22, 22, 19
-                        ],
+                        data: {chartData},
                         borderColor: 'black',
                         backgroundColor: 'rgba(54, 162 ,235, 0.5)',
                         borderWidth: '1',
