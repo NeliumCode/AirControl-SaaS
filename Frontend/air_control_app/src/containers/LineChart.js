@@ -13,7 +13,7 @@ const LineChart = ({chartData}) => {
                 datasets: [
                     {
                         label: 'Temperaturas',
-                        data: {chartData},
+                        data: [24, 22, 19, 21, 21, 29, 30, 31, 26, 26, 28, 25],
                         borderColor: 'black',
                         backgroundColor: 'rgba(54, 162 ,235, 0.5)',
                         borderWidth: '1',

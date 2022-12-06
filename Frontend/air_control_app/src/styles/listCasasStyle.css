@@ -1,6 +1,31 @@
 .body {
     font-family: 'Montserrat', sans-serif;
   }
+
+  /* Styling listCasas Tables */
+  #datacasas {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 110%;
+  }
+
+  /* Styling listCasas Links */
+  #datacasas a:link {
+    color: rgba(26, 94, 230, 0.884); 
+    background-color: transparent; 
+    text-decoration: none;
+  }
+  
+  #datacasas a:visited {
+    color: rgba(26, 94, 230, 0.884);
+    background-color: transparent;
+    text-decoration: none;
+  }
+  
+  #datacasas a:hover {
+    color: rgb(4, 36, 99);
+    background-color: transparent;
+    text-decoration: underline;
+  }
   
   /* The progress container (grey background) */
   .progress-container {

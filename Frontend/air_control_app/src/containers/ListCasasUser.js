@@ -43,7 +43,7 @@ const ListCasasUser = ({ isAuthenticated }) => {
         let casasHTML = ''
       
         casas.forEach(casa => {
-          casasHTML += `<a href="casaDetails/` + casa.id + `">` + '<li>' + '<b>' + casa.name + ': ' + '</b>' + casa.adress + '</li>' + '</a>'
+          casasHTML += '<tr><td>' + `<a href="casaDetails/` + casa.id + `">` + casa.name + '</a></td><td>' + casa.adress + '</td><td>' + casa.owner + '</td></tr>'
         })
         return casasHTML
       }
@@ -107,7 +107,17 @@ const ListCasasUser = ({ isAuthenticated }) => {
                     <button onClick={getListCasasPerUser} className='btn btn-primary btn-lg mt-2'>Actualizar Casas</button>
                     <hr classNameName='my-4' />
                 </div>
-                <div class='houses-js'>
+                <div>
+                    <table id='datacasas' class="table table-hover table-bordered">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Vivienda</th>
+                                <th>Dirección</th>
+                                <th>Propietario</th>
+                            </tr>
+                        </thead>
+                        <tbody class='houses-js'></tbody>
+                    </table>
                 </div>
             </div>
         </Fragment>

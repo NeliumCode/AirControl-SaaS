@@ -1,4 +1,4 @@
-import React, { useEffect, Fragment } from 'react';
+import React, { useEffect, Fragment, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Axios from 'axios';
@@ -27,8 +27,9 @@ const CasaDetails = ({ isAuthenticated }) => {
             }
         };
 
-        const casaId = id;
+        // --- SETTING CASA ID TO CONSTANT --- //
 
+        const casaId = id;
 
         // --- BACKEND API REQUESTS --- //
 
@@ -76,7 +77,7 @@ const CasaDetails = ({ isAuthenticated }) => {
 
         // --- API REQUEST PARAMETERS INICIALIZATION --- //
 
-        const requestedRange = '-24h';
+        const requestedRange = '-48h';
 
         const filterField = 'temp';
 
@@ -109,7 +110,7 @@ const CasaDetails = ({ isAuthenticated }) => {
         let listReadableData = []
       
         listData.forEach(data => {
-            console.log(data);
+            console.log(data.temp);
             if (data.temp){
                 listReadableData.push(data.temp)
                 dataHTML += '<li><b>' + data.temp + '</b></li>'
@@ -123,7 +124,9 @@ const CasaDetails = ({ isAuthenticated }) => {
             //     dataHTML += '<li><b>' + data.ACOff + '</b></li>'
             // }
         })
-        return dataHTML+= '<br/><br/>' + <LineChart chartData={ listReadableData }/>
+        console.log(listReadableData)
+
+        return dataHTML
     }
 
 
@@ -194,11 +197,11 @@ const CasaDetails = ({ isAuthenticated }) => {
                 <br/>
                 <br/>
                 <div class='deviceTemps-js'></div>
-                {/* <br/>
+                <br/>
                 <br/>
                 <div> 
-                    <LineChart />
-                </div> */}
+                    <LineChart/>
+                </div>
 
             </div>
         </Fragment>
