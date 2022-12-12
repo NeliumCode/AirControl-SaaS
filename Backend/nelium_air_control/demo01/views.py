@@ -134,7 +134,7 @@ def get_influxdb_data(request, timeRange, deviceID, filterField):
         # jsonResults = json.dumps(results) 
         
         # Correct method to parse List of Tuples to JSON (It also might have worked just replacing '()' for '{}')
-        jsonResults = [{r[1]: r[0]} for r in results]
+        jsonResults = [r[0] for r in results]
         print(jsonResults)
 
         return Response(jsonResults)

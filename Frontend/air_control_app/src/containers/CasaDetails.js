@@ -1,9 +1,10 @@
-import React, { useEffect, Fragment, useState } from 'react';
+import React, { useEffect, Fragment } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { Chart } from 'chart.js/auto';
 import Axios from 'axios';
-import LineChart from './LineChart';
 import '../styles/listCasasStyle.css';
+import { H } from 'chart.js/dist/chunks/helpers.core';
 
 const CasaDetails = ({ isAuthenticated }) => {
 
@@ -33,10 +34,7 @@ const CasaDetails = ({ isAuthenticated }) => {
 
         // --- BACKEND API REQUESTS --- //
 
-        Axios.get('http://localhost:8080/http://backend:8000/api/v1/casaDetailsUser/' + casaId, headersPostgresDB).then(response => { 
-            // console.log(response);
-            // console.log(response.data);
-            // console.log(response.data.devices);
+        Axios.get('http://localhost:8080/http://backend:8000/api/v1/casaDetailsUser/' + casaId, headersPostgresDB).then(response => {
             document.querySelector('.houseDetails-js').innerHTML = getCasaDetailsHTML(response.data);
             retrieveInfluxData(response.data.devices);
          })
@@ -55,20 +53,7 @@ const CasaDetails = ({ isAuthenticated }) => {
                             '<li> <b> Longitud: </b>' + casa.longitude + '</li>';
 
         return casaDetailsHTML
-      }
-
-    
-    // --- METHOD TO ITERATE DEVICES LIST & SHOW THEM  --- //
-
-    // const getListDevicesHTML = (devices) => {
-    //     let devicesHTML = '<h3><b> Devices </b></h3></br>'
-
-    //     devices.forEach(device => {
-    //         devicesHTML += '<li>' + '<b>' + device.versions + ': ' + '</b>' + device.deviceId + ', ' + device.online + '</li>';
-    //     })
-    //     // console.log(devicesHTML);
-    //     return devicesHTML
-    //   }
+    }
 
 
     // --- METHOD TO RETRIEVE DATA FOR EACH EXISTING DEVICE IN CASA--- //
@@ -77,7 +62,7 @@ const CasaDetails = ({ isAuthenticated }) => {
 
         // --- API REQUEST PARAMETERS INICIALIZATION --- //
 
-        const requestedRange = '-48h';
+        const requestedRange = '-24h';
 
         const filterField = 'temp';
 
@@ -90,43 +75,58 @@ const CasaDetails = ({ isAuthenticated }) => {
             }
         };
 
-        devices.forEach(device => {
+        devices.forEach((device) => {
             
             // --- INFLUXDB API REQUESTS --- //
 
             Axios.get('http://localhost:8080/http://backend:8000/api/v1/influxRequest/' + requestedRange + '/' + device.deviceId + '/' + filterField, headersInfluxDB).then(response => { 
                 console.log(response.data);
-                document.querySelector('.deviceTemps-js').innerHTML = getTempsPerDevice(response.data);
+                poblateCharts(response.data, device.deviceId);
             })
-            
         })
     }
 
 
-    // --- METHOD TO SHOW TEMP => (NEXT) => GENERATE GRAPH WITH TEMP DATA --- //
+    // --- METHOD TO GENERATE AND POBLATE CHARTS WITH DATA --- //
 
-    const getTempsPerDevice = (listData) => {
-        let dataHTML = '<h3><b> Temperatura </b></h3></br>'
-        let listReadableData = []
-      
-        listData.forEach(data => {
-            console.log(data.temp);
-            if (data.temp){
-                listReadableData.push(data.temp)
-                dataHTML += '<li><b>' + data.temp + '</b></li>'
-            }
-            // else if (data.pres){
-            //     listReadableData.push(data.pres)
-            //     dataHTML += '<li><b>' + data.pres + '</b></li>'
-            // }
-            // else if (data.ACOff){
-            //     listReadableData.push(data.ACOff)
-            //     dataHTML += '<li><b>' + data.ACOff + '</b></li>'
-            // }
-        })
-        console.log(listReadableData)
+    const poblateCharts = (listData, deviceId) => {
+        document.querySelector('.deviceTemps-js').insertAdjacentHTML('beforeend', '</br><canvas id="myChart' + deviceId + '"></canvas>');
+        let ctx = document.getElementById('myChart' + deviceId).getContext('2d');
+        console.log(ctx)
 
-        return dataHTML
+        new Chart(ctx,{
+            type: 'line',
+            height: 400,
+            width: 600,
+            options: {
+                legend: { display: false },
+                maintainAspectRatio: true,
+                scales: { 
+                    y: {
+                        min: 10,
+                        max: 30,
+                    }
+                }
+            },
+
+            data: {
+                labels: [
+                    '00h', '01h', '02h', '03h', '04h', '05h', '06h', '07h', '08h', '09h', '10h', '11h',
+                    '12h', '13h', '14h', '15h', '16h', '17h', '18h', '19h', '20h', '21h', '22h', '23h',
+                ],
+                
+                datasets: [
+                    { label: 'Temperaturas',
+                    data: listData,
+                    borderColor: 'black',
+                    backgroundColor: 'rgba(54, 162 ,235, 0.5)',
+                    borderWidth: 1,
+                    fill: true,
+                    tension: 0.25,
+                    }
+                ]
+            },
+        });
     }
 
 
@@ -196,13 +196,11 @@ const CasaDetails = ({ isAuthenticated }) => {
                 <div class='houseDetails-js'></div>
                 <br/>
                 <br/>
+                <br/>
+                <h3>
+                    <b>Temperatura</b>
+                </h3>
                 <div class='deviceTemps-js'></div>
-                <br/>
-                <br/>
-                <div> 
-                    <LineChart/>
-                </div>
-
             </div>
         </Fragment>
     );
