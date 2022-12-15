@@ -26,6 +26,18 @@
     background-color: transparent;
     text-decoration: underline;
   }
+
+  /* Styling casaDetails content */
+  .container h4 {
+    text-align: center;
+    align-items: center;
+    align-content: center;
+  }
+
+  /* Styling casaDetails Charts */
+  canvas{
+    margin-left: 25%;
+  }
   
   /* The progress container (grey background) */
   .progress-container {

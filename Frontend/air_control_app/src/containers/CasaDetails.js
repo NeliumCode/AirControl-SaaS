@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { Chart } from 'chart.js/auto';
 import Axios from 'axios';
 import '../styles/listCasasStyle.css';
-import { H } from 'chart.js/dist/chunks/helpers.core';
 
 const CasaDetails = ({ isAuthenticated }) => {
 
@@ -44,13 +43,39 @@ const CasaDetails = ({ isAuthenticated }) => {
     // --- METHOD TO GENERATE SHOW CASA DETAILS  --- //
 
     const getCasaDetailsHTML = (casa) => {
-        let casaDetailsHTML = '<h3><b> Detalles Casa </b></h3></br>'
+        let casaDetailsHTML = ''
       
-        casaDetailsHTML +=  '<li> <b> Nombre: </b>' + casa.name + '</li>' + 
-                            '<li> <b> Dirección: </b>' + casa.adress + '</li>' +
-                            '<li> <b> Propietario: </b>' + casa.owner + '</li>' +
-                            '<li> <b> Latitud: </b>' + casa.latitude + '</li>' +
-                            '<li> <b> Longitud: </b>' + casa.longitude + '</li>';
+        casaDetailsHTML +=  '<div className="jumbotron mt-5">' +
+                                '<h1 className="display-6">Detalles' + casa.name + '</h1>' +
+                                
+                                '<div className="row">' +
+                                    '<div className="col-6">' +
+                                        '<div id="normalData">' + 
+                                            '<p><strong> Dirección: </strong>' + casa.adress + '</p>' +
+                                        '</div>' +
+                                    '</div>' +
+                                
+                                    '<div className="col-6">' +
+                                        '<div id="normalData">' +
+                                            '<p><strong> Propietario: </strong>' + casa.owner + '</p>' +
+                                        '</div>' +
+                                    '</div>' +
+                                '</div>' +
+
+                                '<div className="row">' +
+                                    '<div className="col-6">' +
+                                        '<div id="normalData">' +
+                                            '<p><strong> Latitud: </strong>' + casa.latitude + '</p>' +
+                                        '</div>' +
+                                    '</div>' +
+
+                                    '<div className="col-6">' +
+                                        '<div id="normalData">' +
+                                            '<p><strong> Longitud: </strong>' + casa.longitude + '</p>' +
+                                        '</div>' +
+                                    '</div>' +
+                                '</div>' +
+                            '</div>'
 
         return casaDetailsHTML
     }
@@ -90,21 +115,30 @@ const CasaDetails = ({ isAuthenticated }) => {
     // --- METHOD TO GENERATE AND POBLATE CHARTS WITH DATA --- //
 
     const poblateCharts = (listData, deviceId) => {
-        document.querySelector('.deviceTemps-js').insertAdjacentHTML('beforeend', '</br><canvas id="myChart' + deviceId + '"></canvas>');
+        document.querySelector('.deviceTemps-js').insertAdjacentHTML('beforeend', '</br>' + 
+                                                                                  '<div style="width: 80%;">' +
+                                                                                  '<canvas id="myChart' + deviceId + '" width="300" height="150">' +
+                                                                                  '</canvas></div>');
         let ctx = document.getElementById('myChart' + deviceId).getContext('2d');
         console.log(ctx)
 
         new Chart(ctx,{
             type: 'line',
-            height: 400,
-            width: 600,
             options: {
-                legend: { display: false },
-                maintainAspectRatio: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Device ' + deviceId,
+                        position: 'top'
+                    },
+                    legend: { display: false },
+                },
+                responsive: true,
+                maintainAspectRatio: false,
                 scales: { 
                     y: {
-                        min: 10,
-                        max: 30,
+                        suggestedMin: 10,
+                        suggestedMax: 30,
                     }
                 }
             },
@@ -193,13 +227,15 @@ const CasaDetails = ({ isAuthenticated }) => {
                     <Link className='btn btn-primary btn-lg mt-2' to='/listCasasUser' role='button'>Volver</Link>
                     <hr classNameName='my-4' />
                 </div>
+                <br/>
                 <div class='houseDetails-js'></div>
                 <br/>
                 <br/>
                 <br/>
-                <h3>
-                    <b>Temperatura</b>
-                </h3>
+                <h4 >
+                    <b>Temperatura dispositivos</b>
+                </h4>
+                <br/>
                 <div class='deviceTemps-js'></div>
             </div>
         </Fragment>
