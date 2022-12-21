@@ -3,7 +3,9 @@ import { Link, useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Chart } from 'chart.js/auto';
 import Axios from 'axios';
+
 import '../styles/listCasasStyle.css';
+import '../styles/notFoundStyle.css';
 
 const CasaDetails = ({ isAuthenticated }) => {
 
@@ -46,12 +48,12 @@ const CasaDetails = ({ isAuthenticated }) => {
         let casaDetailsHTML = ''
       
         casaDetailsHTML +=  '<div className="jumbotron mt-5">' +
-                                '<h1 className="display-6">Detalles' + casa.name + '</h1>' +
+                                '<h1 className="display-6">Detalles ' + casa.name + '</h1>' +
                                 
-                                '<div className="row">' +
-                                    '<div className="col-6">' +
-                                        '<div id="normalData">' + 
-                                            '<p><strong> Dirección: </strong>' + casa.adress + '</p>' +
+                                '<div className="row" style="margin-top: 3.5%; margin-bottom: 3.5%">' +
+                                    '<div className="col-6" style="display: flex; align-items: center; justify-content: center; text-align: center;">' +
+                                        '<div id="normalData" style="background-color: rgb(49, 49, 49); color: white; font-size: 1.25rem; font-weight: 400; border-radius: 14px; padding: 5px; padding-left: 12px; padding-right: 12px;">' + 
+                                            '<p><strong style="background-color: rgb(255, 255, 255); border-radius: 10px; padding-left: 8px; padding-right: 8px; font-size: 1.45rem; color: black;"> Dirección: </strong>' + casa.adress + '</p>' +
                                         '</div>' +
                                     '</div>' +
                                 
@@ -187,20 +189,20 @@ const CasaDetails = ({ isAuthenticated }) => {
                     de los sensores representados en una gráfica.
                     </p>
                     <div className='row'>
-                        <div className='column' id='column_left'>
-                            <div className='alert_danger'>
+                        <div className='column column--position-left'>
+                            <div className='message--status-error'>
                                 <strong> Antes de poder visualizar los detalles de la casa debera iniciar sesión pulsando el 
                                 siguiente botón. 
                                 </strong>
                             </div>
                         </div>
 
-                        <div className='column' id='column_right'>
+                        <div className='column column--position-right'>
                             <Link className='btn btn-primary btn-lg' to='/login' role='button'>Iniciar Sesión</Link>    
                         </div>
                     </div>
                 </div>
-                <hr classNameName='my-4' />
+                <hr className='my-4' />
 
                 <div id='notfound'>
                     <div className='notfound'>
@@ -225,10 +227,10 @@ const CasaDetails = ({ isAuthenticated }) => {
                     de los sensores representados en una gráfica.
                     </p>
                     <Link className='btn btn-primary btn-lg mt-2' to='/listCasasUser' role='button'>Volver</Link>
-                    <hr classNameName='my-4' />
+                    <hr className='my-4' />
                 </div>
                 <br/>
-                <div class='houseDetails-js'></div>
+                <div className='houseDetails-js'></div>
                 <br/>
                 <br/>
                 <br/>
@@ -236,7 +238,7 @@ const CasaDetails = ({ isAuthenticated }) => {
                     <b>Temperatura dispositivos</b>
                 </h4>
                 <br/>
-                <div class='deviceTemps-js'></div>
+                <div className='deviceTemps-js'></div>
             </div>
         </Fragment>
     );

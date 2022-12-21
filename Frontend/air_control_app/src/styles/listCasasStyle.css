@@ -1,27 +1,33 @@
+/* BEM Methodology (Block Element Modifier) */
+/* Naming convention/rules block--modifier-value */
+
+/* GENERAL BODY STYLING */
 .body {
     font-family: 'Montserrat', sans-serif;
   }
 
-  /* Styling listCasas Tables */
-  #datacasas {
+/* AUTHENTICATED CASE */
+
+  /* LIST CASAS TABLE */
+  .table--list-casas {
     font-family: 'Montserrat', sans-serif;
     font-size: 110%;
   }
 
-  /* Styling listCasas Links */
-  #datacasas a:link {
+  /* LIST CASAS LINKS */
+  .table--list-casas a:link {
     color: rgba(26, 94, 230, 0.884); 
     background-color: transparent; 
     text-decoration: none;
   }
   
-  #datacasas a:visited {
-    color: rgba(26, 94, 230, 0.884);
+  .table--list-casas a:visited {
+    color: rgba(145, 26, 230, 0.884);
     background-color: transparent;
     text-decoration: none;
   }
   
-  #datacasas a:hover {
+  .table--list-casas a:hover {
     color: rgb(4, 36, 99);
     background-color: transparent;
     text-decoration: underline;
@@ -38,48 +44,6 @@
   canvas{
     margin-left: 25%;
   }
-  
-  /* The progress container (grey background) */
-  .progress-container {
-    width: 100%;
-    height: 8px;
-    background: #ccc;
-  }
-    
-  /* The progress bar (scroll indicator) */
-  .progress-bar {
-    height: 8px;
-    background: #039cd8;
-    width: 0%;
-  }
-  
-  /* Left column (non_Aunthenticated) */
-  #column_left {
-    float: left;
-    display: flex;
-    margin-top: 1.25%;
-    width: fit-content;
-    height: fit-content;
-  }
-  
-  /* Danger alert properties */
-  .alert_danger {
-    padding: 8px;
-    background-color: #fc1201; /* Red */
-    border-radius: 6px;
-    opacity: 70%;
-    color: white;
-  }
-  
-  /* Right column (non_Aunthenticated)*/
-  #column_right {
-    float: right;
-    display: flex;
-    margin-top: 1%;
-    width: fit-content;
-    height: fit-content;
-  }
-  
   
   /* AUTHENTICATED CASE */
   
@@ -176,178 +140,4 @@
     padding-right: 8px;
     font-size: 1.45rem;
     color: black;
-  }
-  
-  
-  /* NON_AUTHENTICATED CASE */
-    
-  * {
-    -webkit-box-sizing: border-box;
-            box-sizing: border-box;
-  }
-  
-  #notfound {
-    position: relative;
-    height: 60vh;
-  }
-  
-  #notfound .notfound {
-    position: absolute;
-    left: 50%;
-    top: 47%;
-    -webkit-transform: translate(-50%, -50%);
-        -ms-transform: translate(-50%, -50%);
-            transform: translate(-50%, -50%);
-  }
-  
-  .notfound {
-    max-width: 410px;
-    text-align: center;
-  }
-  
-  .notfound .notfound-404 {
-    height: 280px;
-    position: relative;
-    z-index: -1;
-  }
-  
-  .notfound .notfound-404 h1 {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 100px;
-    margin-top: 0px;
-    font-weight: 700;
-    position: absolute;
-    left: 50%;
-    -webkit-transform: translateX(-50%);
-        -ms-transform: translateX(-50%);
-            transform: translateX(-50%);
-    background: url('../assets/bg.jpeg') no-repeat;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-size: cover;
-    background-position: center;
-    width: 200%;
-  }
-  
-  
-  .notfound h2 {
-    font-family: 'Montserrat', sans-serif;
-    color: #000;
-    font-size: 24px;
-    font-weight: 700;
-    text-transform: uppercase;
-    margin-top: 118px;
-    width: 200%;
-    left: 25%;
-    -webkit-transform: translateX(-25%);
-        -ms-transform: translateX(-25%);
-            transform: translateX(-25%);
-  }
-  
-  .notfound p {
-    font-family: 'Montserrat', sans-serif;
-    color: #000;
-    font-size: 14px;
-    font-weight: 400;
-    margin-bottom: 20px;
-    margin-top: 0px;
-    width: 200%;
-    left: 25%;
-    -webkit-transform: translateX(-25%);
-        -ms-transform: translateX(-25%);
-            transform: translateX(-25%);
-  }
-  
-  .notfound a {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 14px;
-    text-decoration: none;
-    text-transform: uppercase;
-    background: #0046d5;
-    display: inline-block;
-    padding: 15px 30px;
-    border-radius: 40px;
-    color: #fff;
-    font-weight: 700;
-    -webkit-box-shadow: 0px 4px 15px -5px #0046d5;
-            box-shadow: 0px 4px 15px -5px #0046d5;
-  }
-  
-  
-  @media only screen and (max-width: 767px) {
-  
-      #notfound .notfound {
-        top: 34%;
-      }
-      .notfound .notfound-404 {
-        height: 100px;
-      }
-      .notfound .notfound-404 h1 {
-        font-size: 250%;
-        -webkit-transform: translateX(-51%);
-            -ms-transform: translateX(-51%);
-                transform: translateX(-51%);
-        width: 90%;
-      }
-      .notfound h2 {
-        font-size: 125%;
-        margin-top: 14%;
-        width: 103%;
-        left: 50%;
-        -webkit-transform: translateX(+0%);
-            -ms-transform: translateX(+0%);
-                transform: translateX(+0%);
-      }
-      .notfound p {
-        font-size: 85%;
-        margin-top: 3%;
-        width: 85%;
-        left: 50%;
-        -webkit-transform: translateX(+9%);
-            -ms-transform: translateX(+9%);
-                transform: translateX(+9%);
-      }
-      .notfound a {
-        font-size: 80%;
-      }
-  }
-  
-  @media only screen and (max-height: 821px) {
-  
-    #notfound .notfound {
-      top: 35%;
-    }
-    .notfound .notfound-404 {
-      height: 100px;
-    }
-    .notfound .notfound-404 h1 {
-      font-size: 300%;
-      width: 127%;
-    }
-    .notfound h2 {
-      margin-top: 12%;
-    }
-  }
-  
-  @media only screen and (max-height: 740px) {
-  
-    #notfound .notfound {
-      top: 42%;
-    }
-    .notfound .notfound-404 {
-      height: 100px;
-    }
-    .notfound .notfound-404 h1 {
-      font-size: 255%;
-      width: 100%;
-    }
-    .notfound h2 {
-      font-size: 110%;
-      margin-top: 16%;
-      width: 92%;
-      left: 50%;
-        -webkit-transform: translateX(+1%);
-            -ms-transform: translateX(+1%);
-                transform: translateX(+1%);
-    }
   }

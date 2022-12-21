@@ -1,3 +1,6 @@
+/* BEM Methodology (Block Element Modifier) */
+/* Naming convention/rules block--modifier-value */
+
 .navbar {
     background-color: rgb(37, 37, 37);
     width: 100%;
