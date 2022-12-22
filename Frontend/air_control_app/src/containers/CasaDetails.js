@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Chart } from 'chart.js/auto';
 import Axios from 'axios';
 
-import '../styles/listCasasStyle.css';
+import '../styles/casaDetailsStyle.css';
 import '../styles/notFoundStyle.css';
 
 const CasaDetails = ({ isAuthenticated }) => {
@@ -47,34 +47,26 @@ const CasaDetails = ({ isAuthenticated }) => {
     const getCasaDetailsHTML = (casa) => {
         let casaDetailsHTML = ''
       
-        casaDetailsHTML +=  '<div className="jumbotron mt-5">' +
-                                '<h1 className="display-6">Detalles ' + casa.name + '</h1>' +
+        casaDetailsHTML +=  '<div class="jumbotron casa--details-enmarked">' +
+                                '<h1 class="display-6">Detalles ' + casa.name + '</h1>' +
                                 
-                                '<div className="row" style="margin-top: 3.5%; margin-bottom: 3.5%">' +
-                                    '<div className="col-6" style="display: flex; align-items: center; justify-content: center; text-align: center;">' +
-                                        '<div id="normalData" style="background-color: rgb(49, 49, 49); color: white; font-size: 1.25rem; font-weight: 400; border-radius: 14px; padding: 5px; padding-left: 12px; padding-right: 12px;">' + 
-                                            '<p><strong style="background-color: rgb(255, 255, 255); border-radius: 10px; padding-left: 8px; padding-right: 8px; font-size: 1.45rem; color: black;"> Dirección: </strong>' + casa.adress + '</p>' +
-                                        '</div>' +
+                                '<div class="row row--margin-topbottom">' +
+                                    '<div class="col-6 datos--position-left">' +
+                                        '<p><strong> Dirección: </strong>' + casa.adress + '</p>' +
                                     '</div>' +
                                 
-                                    '<div className="col-6">' +
-                                        '<div id="normalData">' +
-                                            '<p><strong> Propietario: </strong>' + casa.owner + '</p>' +
-                                        '</div>' +
+                                    '<div class="col-6">' +
+                                        '<p><strong> Latitud: </strong>' + casa.latitude + '</p>' +
                                     '</div>' +
                                 '</div>' +
 
-                                '<div className="row">' +
-                                    '<div className="col-6">' +
-                                        '<div id="normalData">' +
-                                            '<p><strong> Latitud: </strong>' + casa.latitude + '</p>' +
-                                        '</div>' +
+                                '<div class="row row--margin-topbottom">' +
+                                    '<div class="col-6 datos--position-left">' +
+                                        '<p><strong> Propietario: </strong>' + casa.owner + '</p>' +
                                     '</div>' +
 
-                                    '<div className="col-6">' +
-                                        '<div id="normalData">' +
-                                            '<p><strong> Longitud: </strong>' + casa.longitude + '</p>' +
-                                        '</div>' +
+                                    '<div class="col-6">' +
+                                        '<p><strong> Longitud: </strong>' + casa.longitude + '</p>' +
                                     '</div>' +
                                 '</div>' +
                             '</div>'
@@ -118,9 +110,10 @@ const CasaDetails = ({ isAuthenticated }) => {
 
     const poblateCharts = (listData, deviceId) => {
         document.querySelector('.deviceTemps-js').insertAdjacentHTML('beforeend', '</br>' + 
-                                                                                  '<div style="width: 80%;">' +
-                                                                                  '<canvas id="myChart' + deviceId + '" width="300" height="150">' +
-                                                                                  '</canvas></div>');
+                                                                                  '<div class="canvas--div-1">' +
+                                                                                  '<canvas class="canvas--position-center" id="myChart' + deviceId + '">' +
+                                                                                  '</canvas>' + 
+                                                                                  '</div>');
         let ctx = document.getElementById('myChart' + deviceId).getContext('2d');
         console.log(ctx)
 

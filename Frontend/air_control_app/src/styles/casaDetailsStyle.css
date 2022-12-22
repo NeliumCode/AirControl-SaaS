@@ -1,0 +1,46 @@
+/* BEM Methodology (Block Element Modifier) */
+/* Naming convention/rules block--modifier-value */
+  
+/* AUTHENTICATED CASE */
+
+  /* STYLING CASDADETAILS DATA */
+
+  .casa--details-enmarked {
+    background-color: rgb(49, 49, 49);
+    color: white;
+    font-size: 110%;
+    border-radius: 14px;
+    padding: 3%;
+    padding-left: 1%;
+    padding-right: 1%;
+    text-align: center;
+  }
+
+  /* STYLING DATA POSITION */
+
+  .row--margin-topbottom {
+    margin-top: 3.5%;
+    flex-wrap: nowrap;
+  }
+
+  .datos--position-left {
+    padding-left: 6%;
+  }
+
+  /* STYLING CASADETAILS CHARTS */
+
+  .canvas--div-1 {
+    width: 85%;
+  }
+
+  .canvas--position-center {
+    margin-left: 20%;
+  }
+
+  /* STYLING CASADETAILS CONTENT */
+
+  .container h4 {
+    text-align: center;
+    align-items: center;
+    align-content: center;
+  }
