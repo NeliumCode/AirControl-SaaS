@@ -1,5 +1,9 @@
-#concept {
+/* BEM Methodology (Block Element Modifier) */
+/* Naming convention/rules block--modifier-value */
+
+/* IMG MENU */
+.img--aspect-menu {
     width: 100%;
     height: auto;
-    border-radius: 10px;
+    border-radius: 1vh;
 }

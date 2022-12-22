@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-
 import Home from './containers/Home';
 // import Activate from './containers/Activate';
 import Login from './containers/Login';
@@ -15,6 +14,7 @@ import store from './store';
 
 import Layout from './hocs/Layout';
 import ListCasasUser from './containers/ListCasasUser';
+import CasaDetails from './containers/CasaDetails';
 
 
 // --- ANALYTICS REQUEST EXCEPTION CONTROL --- //
@@ -39,6 +39,7 @@ const App = () => (
                     <Route exact path='/login' element={ <Login/> } />
                     <Route exact path='/signup' element={ <Signup/> } />
                     <Route exact path='/listCasasUser' element={ <ListCasasUser/> } />
+                    <Route exact path='/casaDetails/:id' element={ <CasaDetails/> } />
                     {/* <Route exact path='/reset-password' component={ResetPassword} />
                     <Route exact path='/password/reset/confirm/:uid/:token' component={ResetPasswordConfirm} />
                     <Route exact path='/activate/:uid/:token' component={Activate} /> */}

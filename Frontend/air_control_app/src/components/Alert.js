@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+
 import '../styles/alertStyle.css';
 
 
 const Alert = ({ alerts }) => alerts !== null && alerts.length > 0 && alerts.map(alert => (
-    <div key={alert.id} className={`alert--${alert.alertType}`}>
+    <div key={alert.id} className={`alert--state-${alert.alertType}`}>
         { alert.msg }
     </div>
 ));

@@ -2,7 +2,9 @@ import React, { useEffect, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Axios from 'axios';
+
 import '../styles/listCasasStyle.css';
+import '../styles/notFoundStyle.css';
 
 const ListCasasUser = ({ isAuthenticated }) => {
 
@@ -30,7 +32,8 @@ const ListCasasUser = ({ isAuthenticated }) => {
         // --- BACKEND API REQUESTS --- //
 
         Axios.get('http://localhost:8080/http://backend:8000/api/v1/casasUser', headersPostgresDB).then(response => { 
-            console.log(response);
+            // console.log(response);
+            // console.log(response.data);
             document.querySelector('.houses-js').innerHTML = getListCasasHTML(response.data)
          })
     }
@@ -42,7 +45,7 @@ const ListCasasUser = ({ isAuthenticated }) => {
         let casasHTML = ''
       
         casas.forEach(casa => {
-          casasHTML += '<li>' + '<b>' + casa.name + ': ' + '</b>' + casa.adress + '</li>'
+          casasHTML += '<tr><td>' + `<a href="casaDetails/` + casa.id + `">` + casa.name + '</a></td><td>' + casa.adress + '</td><td>' + casa.owner + '</td></tr>'
         })
         return casasHTML
       }
@@ -67,18 +70,18 @@ const ListCasasUser = ({ isAuthenticated }) => {
                     a cada una de ellas pulsando en el nombre de la casa.
                     </p>
                     <div className='row'>
-                        <div className='column' id='column_left'>
-                            <div className='alert_danger'>
+                        <div className='column column--position-left'>
+                            <div className='message--status-error'>
                                 <strong> Antes de poder visualizar las casas debera iniciar sesión pulsando el siguiente botón. </strong>
                             </div>
                         </div>
 
-                        <div className='column' id='column_right'>
+                        <div className='column column--position-right'>
                             <Link className='btn btn-primary btn-lg' to='/login' role='button'>Iniciar Sesión</Link>    
                         </div>
                     </div>
                 </div>
-                <hr classNameName='my-4' />
+                <hr className='my-4' />
 
                 <div id='notfound'>
                     <div className='notfound'>
@@ -104,9 +107,19 @@ const ListCasasUser = ({ isAuthenticated }) => {
                     a cada una de ellas pulsando en el nombre de la casa.
                     </p>
                     <button onClick={getListCasasPerUser} className='btn btn-primary btn-lg mt-2'>Actualizar Casas</button>
-                    <hr classNameName='my-4' />
+                    <hr className='my-4' />
                 </div>
-                <div class='houses-js'>
+                <div>
+                    <table className='table table-hover table-bordered table--list-casas'>
+                        <thead className='table-dark'>
+                            <tr>
+                                <th>Vivienda</th>
+                                <th>Dirección</th>
+                                <th>Propietario</th>
+                            </tr>
+                        </thead>
+                        <tbody className='houses-js'></tbody>
+                    </table>
                 </div>
             </div>
         </Fragment>
@@ -116,7 +129,7 @@ const ListCasasUser = ({ isAuthenticated }) => {
     // --- HTML CONTENT (VIEW) --- //
 
     return (
-        <div id='Analiticas'>
+        <div>
             
             {isAuthenticated ? autenticados() : invitados()}
 

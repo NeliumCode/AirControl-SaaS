@@ -26,25 +26,42 @@ client = InfluxDBClient(url="http://influxdb:8086",
 
 @api_view(["GET"])
 # @authentication_classes([authentication.SessionAuthentication, authentication.TokenAuthentication])
-def get_influxdb_data(request, deviceID):
+def get_influxdb_data(request, timeRange, deviceID, filterField):
 
     bucket = "AC_sensors"
 
     parameters = {
     "_bucket": bucket,
-    "_deviceId": str(deviceID) # Este deviceID vendrá dado por la API /casaDetailsUser/<int:pk>, la cual solo es accesible
-                               # por el usuario que pertenezca a la gestora de dicha casa, esto hace que 
-                               # ya haya una capa de seguridad aplicada para poder acceder al deviceID.
-}
+    "_timeRange": timeRange,
+    "_deviceId": deviceID, # Este deviceID vendrá dado por la API /casaDetailsUser/<int:pk>, la cual solo es accesible
+                           # por el usuario que pertenezca a la gestora de dicha casa, esto hace que 
+                           # ya haya una capa de seguridad aplicada para poder acceder al deviceID.
+    "_filter": filterField,
+    }
 
-    # Query for retrieving all temps of sensor 1 for last 24 hours
-    query = '''
-            from(bucket: _bucket)\
-            |> range(start: -24h)\
-            |> filter(fn: (r) => r["deviceID"] == _deviceId)\
-            |> filter(fn: (r) => r["_field"] == "temp")\
-            |> filter(fn: (r) => r["host"] == "bd43e1bd41b6")
-            '''
+    # Conditional to set query function correctly
+
+    if(filterField == 'temp'):
+
+        # Query for retrieving 24 mean data, 1 each hour, of filterField
+        query = '''
+                from(bucket: _bucket)\
+                |> range(start: duration(v: _timeRange))\
+                |> filter(fn: (r) => r["deviceID"] == _deviceId)\
+                |> filter(fn: (r) => r["_field"] == _filter)\
+                |> aggregateWindow(every: 1h, fn: mean, createEmpty: false)
+                '''
+
+    elif(filterField == 'pres' or filterField == 'ACOff'):
+
+        # Query for retrieving 24 last data, 1 each hour, of filterField
+        query = '''
+                from(bucket: _bucket)\
+                |> range(start: duration(v: _timeRange))\
+                |> filter(fn: (r) => r["deviceID"] == _deviceId)\
+                |> filter(fn: (r) => r["_field"] == _filter)\
+                |> aggregateWindow(every: 1h, fn: last, createEmpty: false)
+                '''
 
     # Query for retrieving average temp of sensor 1 for last 24 hours
     # query = '''
@@ -53,7 +70,7 @@ def get_influxdb_data(request, deviceID):
     #         |> filter(fn: (r) => r["deviceID"] == _deviceId)\
     #         |> filter(fn: (r) => r["_field"] == "temp")\
     #         |> filter(fn: (r) => r["host"] == "bd43e1bd41b6")\
-    #         |> aggregateWindow(every: 1d, fn: mean)
+    #         |> aggregateWindow(every: 1d, fn: mean)\
     #         |> fill(value: 0.0)
     #         '''
     
@@ -75,7 +92,7 @@ def get_influxdb_data(request, deviceID):
     #         |> filter(fn: (r) => r["deviceID"] == _deviceId)\
     #         |> filter(fn: (r) => r["_field"] == "temp")\
     #         |> filter(fn: (r) => r["host"] == "bd43e1bd41b6")\
-    #         |> aggregateWindow(every: 1d, fn: min)
+    #         |> aggregateWindow(every: 1d, fn: min)\
     #         |> fill(value: 0.0)
     #         '''
 
@@ -86,7 +103,7 @@ def get_influxdb_data(request, deviceID):
     #         |> filter(fn: (r) => r["deviceID"] == _deviceId)\
     #         |> filter(fn: (r) => r["_field"] == "temp")\
     #         |> filter(fn: (r) => r["host"] == "bd43e1bd41b6")\
-    #         |> aggregateWindow(every: 1d, fn: last)
+    #         |> aggregateWindow(every: 1d, fn: last)\
     #         |> fill(value: 0.0)
     #         '''
 
@@ -97,7 +114,7 @@ def get_influxdb_data(request, deviceID):
     #         |> filter(fn: (r) => r["deviceID"] == _deviceId)\
     #         |> filter(fn: (r) => r["_field"] == "temp")\
     #         |> filter(fn: (r) => r["host"] == "bd43e1bd41b6")\
-    #         |> aggregateWindow(every: 1d, fn: first)
+    #         |> aggregateWindow(every: 1d, fn: first)\
     #         |> fill(value: 0.0)
     #         '''
 
@@ -117,7 +134,7 @@ def get_influxdb_data(request, deviceID):
         # jsonResults = json.dumps(results) 
         
         # Correct method to parse List of Tuples to JSON (It also might have worked just replacing '()' for '{}')
-        jsonResults = [{r[1]: r[0]} for r in results]
+        jsonResults = [r[0] for r in results]
         print(jsonResults)
 
         return Response(jsonResults)

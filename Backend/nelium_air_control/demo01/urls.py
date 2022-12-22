@@ -15,7 +15,7 @@ urlpatterns = [
 
     # ''' INFLUXDB PYTHON CLIENT URLS ''' #
 
-    path('influxRequest/<int:deviceID>', views.get_influxdb_data),
+    path('influxRequest/<str:timeRange>/<str:deviceID>/<str:filterField>', views.get_influxdb_data),
 
 
     # ''' SPECIFIC USERS LIST URLS ''' #

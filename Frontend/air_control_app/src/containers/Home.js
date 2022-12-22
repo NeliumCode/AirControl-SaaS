@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+
 import conceptImage from '../assets/AirControlConcept.jpeg';
 
 import '../styles/homeStyle.css';
@@ -17,7 +18,7 @@ const Home = ({ isAuthenticated }) => {
     const autenticados = () => (
         <Fragment>
             <p className='lead mt-3'>Accede a tus casas pulsando el siguiente botón:</p>
-            <Link className='btn btn-primary btn-lg mb-5' to='/listCasasUser'>Lista de Casas</Link>
+            <Link className='btn btn-primary btn-lg mb-5' to='/listCasasUser' role='button'>Lista de Casas</Link>
         </Fragment>
     );
 
@@ -30,7 +31,7 @@ const Home = ({ isAuthenticated }) => {
 
                 {isAuthenticated ? autenticados() : invitados()}
 
-                <img id='concept' src={conceptImage} alt='Nelium Analytics' width='1280px' height='720px'/>
+                <img className='img--aspect-menu' src={conceptImage} alt='Nelium Analytics'/>
 
             </div>
         </div>

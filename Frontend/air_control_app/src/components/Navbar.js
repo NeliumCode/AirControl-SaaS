@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logout } from '../actions/auth';
 import Alert from './Alert';
-import '../styles/navbarStyle.css';
+
 import neliumImage from '../assets/NeliumTransparente.jpeg';
 import MenuIcon from '@mui/icons-material/Menu';
+
+import '../styles/navbarStyle.css';
 
 const Navbar = ({ logout, isAuthenticated }) => {
 
