@@ -10,10 +10,13 @@
     color: white;
     font-size: 110%;
     border-radius: 14px;
+    align-items: center;
+    text-align: center;
+    max-width: 65%;
+    margin-left: 18%;
     padding: 3%;
     padding-left: 1%;
     padding-right: 1%;
-    text-align: center;
   }
 
   /* STYLING DATA POSITION */
@@ -43,4 +46,48 @@
     text-align: center;
     align-items: center;
     align-content: center;
+  }
+
+  /* WEB RESPONSIVNESS MOBILE & TABLET */
+
+  @media only screen and (max-height: 821px) {
+
+    .casa--details-enmarked {
+      max-width: 100%;
+      padding-left: 1.5%;
+      padding-right: 1.5%;
+      margin-left: 0%;
+    }
+
+    .datos--position-right {
+      padding-right: 10%;
+    }
+  }
+
+  @media only screen and (max-width: 767px) {
+    
+    .casa--details-enmarked {
+      max-width: 100%;
+      padding-left: 1.5%;
+      padding-right: 1.5%;
+      margin-left: 0%;
+    }
+
+    .datos--position-right {
+      padding-right: 10%;
+    }
+  }
+  
+  @media only screen and (max-height: 740px) {
+    
+    .casa--details-enmarked {
+      max-width: 100%;
+      padding-left: 1.5%;
+      padding-right: 1.5%;
+      margin-left: 0%;
+    }
+
+    .datos--position-right {
+      padding-right: 10%;
+    }
   }

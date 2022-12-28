@@ -48,14 +48,14 @@ const CasaDetails = ({ isAuthenticated }) => {
         let casaDetailsHTML = ''
       
         casaDetailsHTML +=  '<div class="jumbotron casa--details-enmarked">' +
-                                '<h1 class="display-6">Detalles ' + casa.name + '</h1>' +
+                                '<h1 class="display-6">Casa ' + casa.name + '</h1>' +
                                 
                                 '<div class="row row--margin-topbottom">' +
                                     '<div class="col-6 datos--position-left">' +
                                         '<p><strong> Dirección: </strong>' + casa.adress + '</p>' +
                                     '</div>' +
                                 
-                                    '<div class="col-6">' +
+                                    '<div class="col-6 datos--position-right">' +
                                         '<p><strong> Latitud: </strong>' + casa.latitude + '</p>' +
                                     '</div>' +
                                 '</div>' +
@@ -65,7 +65,7 @@ const CasaDetails = ({ isAuthenticated }) => {
                                         '<p><strong> Propietario: </strong>' + casa.owner + '</p>' +
                                     '</div>' +
 
-                                    '<div class="col-6">' +
+                                    '<div class="col-6 datos--position-right">' +
                                         '<p><strong> Longitud: </strong>' + casa.longitude + '</p>' +
                                     '</div>' +
                                 '</div>' +
