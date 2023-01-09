@@ -43,7 +43,7 @@ def get_influxdb_data(request, timeRange, deviceID, filterField):
 
     if(filterField == 'temp'):
 
-        # Query for retrieving 24 mean data, 1 each hour, of filterField
+        # Query for retrieving 24 mean data, 1 each hour, of filterField, for one single device.
         query = '''
                 from(bucket: _bucket)\
                 |> range(start: duration(v: _timeRange))\
@@ -54,69 +54,15 @@ def get_influxdb_data(request, timeRange, deviceID, filterField):
 
     elif(filterField == 'pres' or filterField == 'ACOff'):
 
-        # Query for retrieving 24 last data, 1 each hour, of filterField
+        # Query for retrieving 24 last data, 1 each hour, of filterField, for one single device.
         query = '''
                 from(bucket: _bucket)\
                 |> range(start: duration(v: _timeRange))\
                 |> filter(fn: (r) => r["deviceID"] == _deviceId)\
                 |> filter(fn: (r) => r["_field"] == _filter)\
+                |> toInt()\
                 |> aggregateWindow(every: 1h, fn: last, createEmpty: false)
                 '''
-
-    # Query for retrieving average temp of sensor 1 for last 24 hours
-    # query = '''
-    #         from(bucket: _bucket)\
-    #         |> range(start: -24h)\
-    #         |> filter(fn: (r) => r["deviceID"] == _deviceId)\
-    #         |> filter(fn: (r) => r["_field"] == "temp")\
-    #         |> filter(fn: (r) => r["host"] == "bd43e1bd41b6")\
-    #         |> aggregateWindow(every: 1d, fn: mean)\
-    #         |> fill(value: 0.0)
-    #         '''
-    
-    # Query for retrieving max temp of sensor 1 for last 24 hours
-    # query = '''
-    #         from(bucket: _bucket)\
-    #         |> range(start: -24h)\
-    #         |> filter(fn: (r) => r["deviceID"] == _deviceId)\
-    #         |> filter(fn: (r) => r["_field"] == "temp")\
-    #         |> filter(fn: (r) => r["host"] == "bd43e1bd41b6")\
-    #         |> aggregateWindow(every: 1d, fn: max)\
-    #         |> fill(value: 0.0)
-    #         '''
-    
-    # Query for retrieving min temp of sensor 1 for last 24 hours
-    # query = '''
-    #         from(bucket: _bucket)\
-    #         |> range(start: -24h)\
-    #         |> filter(fn: (r) => r["deviceID"] == _deviceId)\
-    #         |> filter(fn: (r) => r["_field"] == "temp")\
-    #         |> filter(fn: (r) => r["host"] == "bd43e1bd41b6")\
-    #         |> aggregateWindow(every: 1d, fn: min)\
-    #         |> fill(value: 0.0)
-    #         '''
-
-    # Query for retrieving last current temp of sensor 1 for 24 hours range
-    # query = '''
-    #         from(bucket: _bucket)\
-    #         |> range(start: -24h)\
-    #         |> filter(fn: (r) => r["deviceID"] == _deviceId)\
-    #         |> filter(fn: (r) => r["_field"] == "temp")\
-    #         |> filter(fn: (r) => r["host"] == "bd43e1bd41b6")\
-    #         |> aggregateWindow(every: 1d, fn: last)\
-    #         |> fill(value: 0.0)
-    #         '''
-
-    # Query for retrieving first temp of sensor 1 for 24 hours range
-    # query = '''
-    #         from(bucket: _bucket)\
-    #         |> range(start: -24h)\
-    #         |> filter(fn: (r) => r["deviceID"] == _deviceId)\
-    #         |> filter(fn: (r) => r["_field"] == "temp")\
-    #         |> filter(fn: (r) => r["host"] == "bd43e1bd41b6")\
-    #         |> aggregateWindow(every: 1d, fn: first)\
-    #         |> fill(value: 0.0)
-    #         '''
 
 
     result = client.query_api().query(org="AirControl_Nelium", query=query, params=parameters)
