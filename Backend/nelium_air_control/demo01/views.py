@@ -61,7 +61,8 @@ def get_influxdb_data(request, timeRange, deviceID, filterField):
                 |> filter(fn: (r) => r["deviceID"] == _deviceId)\
                 |> filter(fn: (r) => r["_field"] == _filter)\
                 |> toInt()\
-                |> aggregateWindow(every: 1h, fn: last, createEmpty: false)
+                |> aggregateWindow(every: 1h, fn: last, createEmpty: true)\
+                |> fill(value: 0)
                 '''
 
 
