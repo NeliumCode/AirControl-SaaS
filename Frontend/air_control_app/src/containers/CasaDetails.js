@@ -83,7 +83,9 @@ const CasaDetails = ({ isAuthenticated }) => {
 
         const requestedRange = '-24h';
 
-        const filterField = 'temp';
+        const filterFieldTemp = 'temp';
+
+        const filterFieldPres = 'pres';
 
         // --- HEADERS INFLUXDB API REQUESTS --- //
 
@@ -98,23 +100,28 @@ const CasaDetails = ({ isAuthenticated }) => {
             
             // --- INFLUXDB API REQUESTS --- //
 
-            Axios.get('http://localhost:8080/http://backend:8000/api/v1/influxRequest/' + requestedRange + '/' + device.deviceId + '/' + filterField, headersInfluxDB).then(response => { 
+            Axios.get('http://localhost:8080/http://backend:8000/api/v1/influxRequest/' + requestedRange + '/' + device.deviceId + '/' + filterFieldTemp, headersInfluxDB).then(response => { 
                 console.log(response.data);
-                poblateCharts(response.data, device.deviceId);
+                poblateTempCharts(response.data, device.deviceId);
+            })
+
+            Axios.get('http://localhost:8080/http://backend:8000/api/v1/influxRequest/' + requestedRange + '/' + device.deviceId + '/' + filterFieldPres, headersInfluxDB).then(response => { 
+                console.log(response.data);
+                poblatePresCharts(response.data, device.deviceId);
             })
         })
     }
 
 
-    // --- METHOD TO GENERATE AND POBLATE CHARTS WITH DATA --- //
+    // --- METHOD TO GENERATE AND POBLATE TEMP CHARTS WITH DATA --- //
 
-    const poblateCharts = (listData, deviceId) => {
+    const poblateTempCharts = (tempListData, deviceId) => {
         document.querySelector('.deviceTemps-js').insertAdjacentHTML('beforeend', '</br>' + 
                                                                                   '<div class="canvas--div-1">' +
-                                                                                  '<canvas class="canvas--position-center" id="myChart' + deviceId + '">' +
+                                                                                  '<canvas class="canvas--position-center" id="myTempChart' + deviceId + '">' +
                                                                                   '</canvas>' + 
                                                                                   '</div>');
-        let ctx = document.getElementById('myChart' + deviceId).getContext('2d');
+        let ctx = document.getElementById('myTempChart' + deviceId).getContext('2d');
         console.log(ctx)
 
         new Chart(ctx,{
@@ -146,7 +153,7 @@ const CasaDetails = ({ isAuthenticated }) => {
                 
                 datasets: [
                     { label: 'Temperaturas',
-                    data: listData,
+                    data: tempListData,
                     borderColor: 'black',
                     backgroundColor: 'rgba(54, 162 ,235, 0.5)',
                     borderWidth: 1,
@@ -158,6 +165,57 @@ const CasaDetails = ({ isAuthenticated }) => {
         });
     }
 
+
+    // --- METHOD TO GENERATE AND POBLATE Pres CHARTS WITH DATA --- //
+
+    const poblatePresCharts = (presListData, deviceId) => {
+        document.querySelector('.devicePres-js').insertAdjacentHTML('beforeend', '</br>' + 
+                                                                                  '<div class="canvas--div-1">' +
+                                                                                  '<canvas class="canvas--position-center" id="myPresChart' + deviceId + '">' +
+                                                                                  '</canvas>' + 
+                                                                                  '</div>');
+        let ctx = document.getElementById('myPresChart' + deviceId).getContext('2d');
+        console.log(ctx)
+
+        new Chart(ctx,{
+            type: 'bar',
+            options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Device ' + deviceId,
+                        position: 'top'
+                    },
+                    legend: { display: false },
+                },
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: { 
+                    y: {
+                        suggestedMin: 0,
+                        suggestedMax: 1,
+                    }
+                }
+            },
+
+            data: {
+                labels: [
+                    '00h', '01h', '02h', '03h', '04h', '05h', '06h', '07h', '08h', '09h', '10h', '11h',
+                    '12h', '13h', '14h', '15h', '16h', '17h', '18h', '19h', '20h', '21h', '22h', '23h',
+                ],
+                
+                datasets: [
+                    { label: 'Presencia',
+                    data: presListData,
+                    borderColor: 'black',
+                    backgroundColor: 'rgba(54, 162 ,235, 0.5)',
+                    borderWidth: 1,
+                    fill: true,
+                    }
+                ]
+            },
+        });
+    }
 
     // --- ASSIGNING ID PARAM FROM URL --- //
 
@@ -232,6 +290,7 @@ const CasaDetails = ({ isAuthenticated }) => {
                 </h4>
                 <br/>
                 <div className='deviceTemps-js'></div>
+                <div className='devicePres-js'></div>
             </div>
         </Fragment>
     );
